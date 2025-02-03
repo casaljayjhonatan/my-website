@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -148,16 +148,20 @@
             validateLogin();
         });
 
-        
+        // Event listener for "Log in with Google" button
         document.getElementById('googleLoginBtn').addEventListener('click', function (event) {
-            event.preventDefault();  
+            event.preventDefault();  // For now, just simulate Google login
             alert("Google login is not yet integrated.");
         });
 
-        
+        // Event listener for "Log Out" button click
         document.getElementById('logoutBtn').addEventListener('click', function () {
-            window.location.replace('index.html');  
+            // Redirect to login page (or reload the current page for simplicity)
+            window.location.replace('index.html.html');  
         });
     </script>
 </body>
 </html>
+
+
+
