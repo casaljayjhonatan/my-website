@@ -1,0 +1,87 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JRU Student Login</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .login-container {
+            background-color: #003366;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+            .login-container img {
+                max-width: 100px;
+                margin-bottom: 20px;
+            }
+
+            .login-container h1 {
+                margin-bottom: 20px;
+                font-size: 1.5rem;
+            }
+
+            .login-container input {
+                width: 100%;
+                padding: 10px;
+                margin: 10px 0;
+                border: none;
+                border-radius: 5px;
+                background-color: #e6e6e6;
+            }
+
+            .login-container button {
+                width: 100%;
+                padding: 10px;
+                background-color: #00509e;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 1rem;
+                margin-top: 10px;
+            }
+
+                .login-container button:hover {
+                    background-color: #0074d9;
+                }
+
+            .login-container .google-login {
+                background-color: #db4437;
+            }
+
+                .login-container .google-login:hover {
+                    background-color: #c23321;
+                }
+    </style>
+</head>
+<body>
+    <div class="login-container">
+        <img src="jru-logo.png" alt="JRU Logo">
+        <h1>JRU Student Login</h1>
+        <input type="text" placeholder="Username" required>
+        <input type="password" placeholder="Password" required>
+        <button>Log In</button>
+        <button class="google-login">Log in with Google</button>
+    </div>
+</body>
+</html>
