@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>JRU Student Dashboard</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .dashboard-container {
+            background-color: #003366;
+            color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            width: 300px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+            .dashboard-container h1 {
+                margin-bottom: 20px;
+                font-size: 1.5rem;
+            }
+
+            .dashboard-container p {
+                margin-bottom: 20px;
+                font-size: 1rem;
+            }
+
+            .dashboard-container button {
+                padding: 10px;
+                background-color: #00509e;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 1rem;
+                margin-top: 10px;
+            }
+
+                .dashboard-container button:hover {
+                    background-color: #0074d9;
+                }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <h1>Welcome to JRU Student Dashboard</h1>
+        <p>You have successfully logged in!</p>
+        <button onclick="logout()">Log Out</button>
+    </div>
+
+    <script>
+        // Function to handle logout
+        function logout() {
+            window.location.href = 'index.html'; // Redirect to the login page
+        }
+    </script>
+</body>
+</html>
