@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JRU Student Dashboard</title>
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -35,16 +34,7 @@
             font-size: 1rem;
         }
 
-        .input-field {
-            width: 90%;
-            padding: 8px;
-            margin-bottom: 10px;
-            border: none;
-            border-radius: 5px;
-            font-size: 1rem;
-        }
-
-        .login-btn {
+        .logout-btn {
             padding: 10px;
             background-color: #00509e;
             color: #fff;
@@ -52,92 +42,38 @@
             border-radius: 5px;
             cursor: pointer;
             font-size: 1rem;
-            margin-top: 10px;
             width: 100%;
         }
 
-        .login-btn:hover {
+        .logout-btn:hover {
             background-color: #0074d9;
-        }
-
-        .google-btn {
-            padding: 10px;
-            background-color: #fff;
-            color: #003366;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            margin-top: 10px;
-            width: 100%;
-        }
-
-        .google-btn:hover {
-            background-color: #ddd;
         }
     </style>
 </head>
 <body>
     <div class="dashboard-container">
         <h1>JRU Student Dashboard</h1>
-        <p id="user-info">Please enter your details.</p>
-
-        <!-- Username Login -->
-        <input type="text" id="username" class="input-field" placeholder="Enter username">
-        <button class="login-btn" onclick="usernameLogin()">Continue</button>
-
-        <br><br>
-
-        <!-- Google Sign-In -->
-        <div id="g_id_onload"
-            data-client_id="YOUR_GOOGLE_CLIENT_ID"
-            data-callback="handleCredentialResponse"
-            data-auto_prompt="false">
-        </div>
-        <div class="g_id_signin" data-type="standard"></div>
-
-        <br>
-        <button class="login-btn" onclick="logout()">Log Out</button>
+        <p id="user-info">Loading...</p>
+        <button class="logout-btn" onclick="logout()">Log Out</button>
     </div>
 
     <script>
-        // Username Login Function
-        function usernameLogin() {
-            const username = document.getElementById("username").value;
-            const usernamePattern = /^\d{2}-\d{6}$/; // Format: XX-XXXXXX (e.g., 14-363004)
+        function checkLogin() {
+            const user = sessionStorage.getItem("loggedInUser");
 
-            if (usernamePattern.test(username)) {
-                document.getElementById("user-info").innerHTML = `Logged in as: ${username}`;
+            if (user) {
+                document.getElementById("user-info").innerHTML = `Logged in as: ${user}`;
             } else {
-                alert("Invalid username format.");
+                window.location.href = "index.html"; // Redirect to login page if not logged in
             }
-        }
-
-        // Google Sign-In Function
-        function handleCredentialResponse(response) {
-            const responsePayload = parseJwt(response.credential);
-            const email = responsePayload.email;
-
-            // Regular expression for "firstname.lastname@my.jru.edu"
-            const jruEmailPattern = /^[a-zA-Z]+\.[a-zA-Z]+@my\.jru\.edu$/;
-
-            if (jruEmailPattern.test(email)) {
-                document.getElementById("user-info").innerHTML = `Logged in as: ${responsePayload.name} <br> Email: ${email}`;
-            } else {
-                alert("Invalid email. Please use your JRU student email (firstname.lastname@my.jru.edu).");
-                logout();
-            }
-        }
-
-        function parseJwt(token) {
-            const base64Url = token.split('.')[1];
-            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-            return JSON.parse(atob(base64));
         }
 
         function logout() {
-            document.getElementById("user-info").innerHTML = "Please enter your details.";
+            sessionStorage.removeItem("loggedInUser");
+            window.location.href = "index.html"; // Redirect to login
         }
+
+        window.onload = checkLogin;
     </script>
 </body>
 </html>
