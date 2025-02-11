@@ -116,7 +116,7 @@
         }
 
         function googleLogin() {
-            google.accounts.id.prompt(); // Opens Google Sign-In popup
+            google.accounts.id.prompt(); // Always show login prompt, even in Guest Mode
         }
 
         function handleCredentialResponse(response) {
