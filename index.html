@@ -75,9 +75,12 @@
     <div class="login-container">
         <h1>JRU Student Login</h1>
 
-        <!-- Username Login -->
+        <!-- Username & Password Fields -->
         <input type="text" id="username" class="input-field" placeholder="Enter username">
-        <button class="login-btn" onclick="usernameLogin()">Continue</button>
+        <input type="password" id="password" class="input-field" placeholder="Enter password">
+        
+        <!-- Login Button -->
+        <button class="login-btn" onclick="usernameLogin()">Log In</button>
 
         <br><br>
 
@@ -87,20 +90,25 @@
             data-callback="handleCredentialResponse"
             data-auto_prompt="false">
         </div>
-        <div class="g_id_signin" data-type="standard"></div>
+        <button class="google-btn" onclick="googleLogin()">Log in with Google</button>
     </div>
 
     <script>
         function usernameLogin() {
             const username = document.getElementById("username").value;
+            const password = document.getElementById("password").value;
             const usernamePattern = /^\d{2}-\d{6}$/; // Format: XX-XXXXXX (e.g., 14-363004)
 
-            if (usernamePattern.test(username)) {
+            if (usernamePattern.test(username) && password !== "") {
                 sessionStorage.setItem("loggedInUser", username);
                 window.location.href = "dashboard.html"; // Redirect to dashboard
             } else {
-                alert("Invalid username format.");
+                alert("Invalid username format or password is missing.");
             }
+        }
+
+        function googleLogin() {
+            google.accounts.id.prompt(); // Opens Google Sign-In popup
         }
 
         function handleCredentialResponse(response) {
