@@ -4,13 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JRU Student Login</title>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
         body {
             font-family: Arial, sans-serif;
             background-color: #f4f4f4;
@@ -30,134 +25,105 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-            .login-container h1 {
-                margin-bottom: 20px;
-                font-size: 1.5rem;
-            }
-
-            .login-container input {
-                width: 100%;
-                padding: 10px;
-                margin: 10px 0;
-                border: none;
-                border-radius: 5px;
-                background-color: #e6e6e6;
-            }
-
-            .login-container button {
-                width: 100%;
-                padding: 10px;
-                background-color: #00509e;
-                color: #fff;
-                border: none;
-                border-radius: 5px;
-                cursor: pointer;
-                font-size: 1rem;
-            }
-
-                .login-container button:hover {
-                    background-color: #0074d9;
-                }
-
-        .logo {
-            width: 100px; /* Adjust logo size */
+        .login-container h1 {
             margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .input-field {
+            width: 90%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: none;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+
+        .login-btn {
+            padding: 10px;
+            background-color: #00509e;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+        }
+
+        .login-btn:hover {
+            background-color: #0074d9;
         }
 
         .google-btn {
-            background-color: #f5a623 !important; /* Yellow Gold color */
-            margin-top: 10px;
-            color: #fff; /* Make text white */
-            border: none; /* Remove default border */
-            padding: 10px; /* Add padding */
-            width: 100%; /* Make button fill the width */
-            font-size: 1rem;
-            cursor: pointer;
-            border-radius: 5px; /* Rounded corners */
-        }
-
-            .google-btn:hover {
-                background-color: #e59429 !important; /* Darker yellow gold on hover */
-            }
-
-        .logout-btn {
-            background-color: #d9534f; /* Red color for log out */
-            margin-top: 10px;
-            color: #fff;
-            border: none;
             padding: 10px;
-            width: 100%;
-            font-size: 1rem;
-            cursor: pointer;
+            background-color: #fff;
+            color: #003366;
+            border: none;
             border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            width: 100%;
+            margin-top: 10px;
         }
 
-            .logout-btn:hover {
-                background-color: #c9302c; /* Darker red for hover effect */
-            }
+        .google-btn:hover {
+            background-color: #ddd;
+        }
     </style>
 </head>
 <body>
     <div class="login-container">
-        <!-- Add logo here -->
-        <img src="jrulogo.png" alt="JRU Logo" class="logo">
-
         <h1>JRU Student Login</h1>
-        <input type="text" id="username" placeholder="Username" required>
-        <input type="password" id="password" placeholder="Password" required>
-        <button id="loginBtn">Log In</button>
 
-        <!-- Add Google login button -->
-        <button class="google-btn" id="googleLoginBtn">Log in with Google</button>
+        <!-- Username Login -->
+        <input type="text" id="username" class="input-field" placeholder="Enter username">
+        <button class="login-btn" onclick="usernameLogin()">Continue</button>
 
-        <!-- Add Log Out button (this button will appear after login) -->
-        <button class="logout-btn" id="logoutBtn" style="display: none;">Log Out</button>
+        <br><br>
+
+        <!-- Google Sign-In -->
+        <div id="g_id_onload"
+            data-client_id="YOUR_GOOGLE_CLIENT_ID"
+            data-callback="handleCredentialResponse"
+            data-auto_prompt="false">
+        </div>
+        <div class="g_id_signin" data-type="standard"></div>
     </div>
 
     <script>
-        // Function to validate login
-        function validateLogin() {
-            var username = document.getElementById('username').value;
-            var password = document.getElementById('password').value;
+        function usernameLogin() {
+            const username = document.getElementById("username").value;
+            const usernamePattern = /^\d{2}-\d{6}$/; // Format: XX-XXXXXX (e.g., 14-363004)
 
-            // Correct username and password for login
-            var correctUsername = '14-363004';
-            var correctPassword = 'QWERTYUIOP';
-
-            // Debugging log
-            console.log('Entered Username:', username);
-            console.log('Entered Password:', password);
-
-            // Check if username and password match
-            if (username === correctUsername && password === correctPassword) {
-                console.log('Login successful!');
-                alert('Login Successful!');
-                window.location.replace('dashboard.html');  // Make sure dashboard.html is in the same folder
-                document.getElementById('logoutBtn').style.display = 'block';  // Show the logout button after login
-                document.getElementById('loginBtn').style.display = 'none';  // Hide the login button after login
-                document.getElementById('googleLoginBtn').style.display = 'none';  // Hide Google login button
+            if (usernamePattern.test(username)) {
+                sessionStorage.setItem("loggedInUser", username);
+                window.location.href = "dashboard.html"; // Redirect to dashboard
             } else {
-                console.log('Invalid username or password');
-                alert('Invalid Username or Password');
+                alert("Invalid username format.");
             }
         }
 
-        // Event listener for "Log In" button click (ensure this is only set once)
-        document.getElementById('loginBtn').addEventListener('click', function (event) {
-            event.preventDefault();  // Prevent form submission if inside a form
-            validateLogin();
-        });
+        function handleCredentialResponse(response) {
+            const responsePayload = parseJwt(response.credential);
+            const email = responsePayload.email;
 
-        
-        document.getElementById('googleLoginBtn').addEventListener('click', function (event) {
-            event.preventDefault();  
-            alert("Google login is not yet integrated.");
-        });
+            // Regular expression for "firstname.lastname@my.jru.edu"
+            const jruEmailPattern = /^[a-zA-Z]+\.[a-zA-Z]+@my\.jru\.edu$/;
 
-        
-        document.getElementById('logoutBtn').addEventListener('click', function () {
-            window.location.replace('index.html');  
-        });
+            if (jruEmailPattern.test(email)) {
+                sessionStorage.setItem("loggedInUser", email);
+                window.location.href = "dashboard.html"; // Redirect to dashboard
+            } else {
+                alert("Invalid email. Please use your JRU student email (firstname.lastname@my.jru.edu).");
+            }
+        }
+
+        function parseJwt(token) {
+            const base64Url = token.split('.')[1];
+            const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+            return JSON.parse(atob(base64));
+        }
     </script>
 </body>
 </html>
+
