@@ -24,56 +24,45 @@
             box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        .dashboard-container h1 {
-            margin-bottom: 20px;
-            font-size: 1.5rem;
-        }
+            .dashboard-container h1 {
+                margin-bottom: 20px;
+                font-size: 1.5rem;
+            }
 
-        .dashboard-container p {
-            margin-bottom: 20px;
-            font-size: 1rem;
-        }
+            .dashboard-container p {
+                margin-bottom: 20px;
+                font-size: 1rem;
+            }
 
-        .logout-btn {
-            padding: 10px;
-            background-color: #00509e;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-            font-size: 1rem;
-            width: 100%;
-        }
+            .dashboard-container button {
+                padding: 10px;
+                background-color: #00509e;
+                color: #fff;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                font-size: 1rem;
+                margin-top: 10px;
+            }
 
-        .logout-btn:hover {
-            background-color: #0074d9;
-        }
+                .dashboard-container button:hover {
+                    background-color: #0074d9;
+                }
     </style>
 </head>
 <body>
     <div class="dashboard-container">
-        <h1>JRU Student Dashboard</h1>
-        <p id="user-info">Loading...</p>
-        <button class="logout-btn" onclick="logout()">Log Out</button>
+        <h1>Welcome to JRU Student Dashboard</h1>
+        <p>You have successfully logged in!</p>
+        <button onclick="logout()">Log Out</button>
     </div>
 
     <script>
-        function checkLogin() {
-            const user = sessionStorage.getItem("loggedInUser");
-
-            if (user) {
-                document.getElementById("user-info").innerHTML = `Logged in as: ${user}`;
-            } else {
-                window.location.href = "index.html"; // Redirect to login page if not logged in
-            }
-        }
-
+        // Function to handle logout
         function logout() {
-            sessionStorage.removeItem("loggedInUser");
-            window.location.href = "index.html"; // Redirect to login
+            window.location.href = 'index.html'; // Redirect to the login page
         }
-
-        window.onload = checkLogin;
     </script>
 </body>
 </html>
+
